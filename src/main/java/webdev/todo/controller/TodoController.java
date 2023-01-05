@@ -1,10 +1,12 @@
 package webdev.todo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import webdev.todo.dto.ResponseDTO;
+import webdev.todo.service.TodoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("todo")
 public class TodoController {
-    @GetMapping("/testResponseEntity")
+
+    @Autowired
+    private TodoService todoService;
+
+    @GetMapping("/test")
     public ResponseEntity<?> testTodo() {
+        String str = todoService.testService();
         List<String> list = new ArrayList<>();
-        list.add("Hello World! I'm ResponseEntity. And you got OK!");
+        list.add(str);
         ResponseDTO<String> response = ResponseDTO.<String>builder().data(list).build();
         return ResponseEntity.ok().body(response);
     }
